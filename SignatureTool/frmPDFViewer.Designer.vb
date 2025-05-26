@@ -19,6 +19,7 @@ Partial Class frmPDFViewer
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmPDFViewer))
         Me.PdfViewer1 = New DevExpress.XtraPdfViewer.PdfViewer()
         Me.SuspendLayout()
         '
@@ -36,8 +37,10 @@ Partial Class frmPDFViewer
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1099, 801)
         Me.Controls.Add(Me.PdfViewer1)
+        Me.IconOptions.SvgImage = CType(resources.GetObject("frmPDFViewer.IconOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
         Me.Name = "frmPDFViewer"
-        Me.Text = "frmPDFViewer"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Text = "PDF Viewer"
         Me.ResumeLayout(False)
 
     End Sub

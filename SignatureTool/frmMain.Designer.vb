@@ -25,9 +25,10 @@
     ''' </summary>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
         Me.LayoutControl1 = New DevExpress.XtraLayout.LayoutControl()
         Me.btnSettings = New DevExpress.XtraEditors.SimpleButton()
-        Me.btnSelectAllNonCompliant = New DevExpress.XtraEditors.CheckButton()
+        Me.btnSelectNonCompliant = New DevExpress.XtraEditors.CheckButton()
         Me.btnSelectCompliant = New DevExpress.XtraEditors.CheckButton()
         Me.btnSignSelected = New DevExpress.XtraEditors.SimpleButton()
         Me.GridControl1 = New DevExpress.XtraGrid.GridControl()
@@ -43,11 +44,11 @@
         Me.LayoutControlItem2 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem3 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.EmptySpaceItem2 = New DevExpress.XtraLayout.EmptySpaceItem()
-        Me.LayoutControlItem4 = New DevExpress.XtraLayout.LayoutControlItem()
+        Me.LayoutControlItem6 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem5 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.EmptySpaceItem3 = New DevExpress.XtraLayout.EmptySpaceItem()
+        Me.LayoutControlItem4 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.EmptySpaceItem1 = New DevExpress.XtraLayout.EmptySpaceItem()
-        Me.LayoutControlItem6 = New DevExpress.XtraLayout.LayoutControlItem()
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.LayoutControl1.SuspendLayout()
         CType(Me.GridControl1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -58,17 +59,17 @@
         CType(Me.LayoutControlItem2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem2, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.LayoutControlItem4, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem6, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.LayoutControlItem6, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'LayoutControl1
         '
         Me.LayoutControl1.Controls.Add(Me.btnSettings)
-        Me.LayoutControl1.Controls.Add(Me.btnSelectAllNonCompliant)
+        Me.LayoutControl1.Controls.Add(Me.btnSelectNonCompliant)
         Me.LayoutControl1.Controls.Add(Me.btnSelectCompliant)
         Me.LayoutControl1.Controls.Add(Me.btnSignSelected)
         Me.LayoutControl1.Controls.Add(Me.GridControl1)
@@ -89,20 +90,20 @@
         Me.btnSettings.TabIndex = 9
         Me.btnSettings.Text = "Settings..."
         '
-        'btnSelectAllNonCompliant
+        'btnSelectNonCompliant
         '
-        Me.btnSelectAllNonCompliant.Location = New System.Drawing.Point(301, 16)
-        Me.btnSelectAllNonCompliant.Name = "btnSelectAllNonCompliant"
-        Me.btnSelectAllNonCompliant.Size = New System.Drawing.Size(261, 28)
-        Me.btnSelectAllNonCompliant.StyleController = Me.LayoutControl1
-        Me.btnSelectAllNonCompliant.TabIndex = 8
-        Me.btnSelectAllNonCompliant.Text = "Select All Non-Compliant Units"
+        Me.btnSelectNonCompliant.Location = New System.Drawing.Point(741, 858)
+        Me.btnSelectNonCompliant.Name = "btnSelectNonCompliant"
+        Me.btnSelectNonCompliant.Size = New System.Drawing.Size(241, 28)
+        Me.btnSelectNonCompliant.StyleController = Me.LayoutControl1
+        Me.btnSelectNonCompliant.TabIndex = 8
+        Me.btnSelectNonCompliant.Text = "Select All Non-Compliant Units"
         '
         'btnSelectCompliant
         '
-        Me.btnSelectCompliant.Location = New System.Drawing.Point(16, 16)
+        Me.btnSelectCompliant.Location = New System.Drawing.Point(499, 858)
         Me.btnSelectCompliant.Name = "btnSelectCompliant"
-        Me.btnSelectCompliant.Size = New System.Drawing.Size(244, 28)
+        Me.btnSelectCompliant.Size = New System.Drawing.Size(202, 28)
         Me.btnSelectCompliant.StyleController = Me.LayoutControl1
         Me.btnSelectCompliant.TabIndex = 7
         Me.btnSelectCompliant.Text = "Select All Compliant Units"
@@ -111,9 +112,9 @@
         '
         Me.btnSignSelected.Appearance.FontStyleDelta = System.Drawing.FontStyle.Bold
         Me.btnSignSelected.Appearance.Options.UseFont = True
-        Me.btnSignSelected.Location = New System.Drawing.Point(1002, 858)
+        Me.btnSignSelected.Location = New System.Drawing.Point(1038, 858)
         Me.btnSignSelected.Name = "btnSignSelected"
-        Me.btnSignSelected.Size = New System.Drawing.Size(189, 28)
+        Me.btnSignSelected.Size = New System.Drawing.Size(153, 28)
         Me.btnSignSelected.StyleController = Me.LayoutControl1
         Me.btnSignSelected.TabIndex = 6
         Me.btnSignSelected.Text = "Sign Selected PDFs"
@@ -121,11 +122,11 @@
         'GridControl1
         '
         Me.GridControl1.DataSource = Me.bsGridItems
-        Me.GridControl1.Location = New System.Drawing.Point(16, 50)
+        Me.GridControl1.Location = New System.Drawing.Point(16, 16)
         Me.GridControl1.MainView = Me.GridView1
         Me.GridControl1.Name = "GridControl1"
         Me.GridControl1.RepositoryItems.AddRange(New DevExpress.XtraEditors.Repository.RepositoryItem() {Me.RepositoryItemButtonEdit1})
-        Me.GridControl1.Size = New System.Drawing.Size(1175, 802)
+        Me.GridControl1.Size = New System.Drawing.Size(1175, 836)
         Me.GridControl1.TabIndex = 5
         Me.GridControl1.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView1})
         '
@@ -211,7 +212,7 @@
         '
         Me.Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.[True]
         Me.Root.GroupBordersVisible = False
-        Me.Root.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem2, Me.LayoutControlItem3, Me.EmptySpaceItem2, Me.LayoutControlItem4, Me.LayoutControlItem5, Me.EmptySpaceItem3, Me.EmptySpaceItem1, Me.LayoutControlItem6})
+        Me.Root.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem2, Me.LayoutControlItem3, Me.EmptySpaceItem2, Me.LayoutControlItem6, Me.LayoutControlItem5, Me.EmptySpaceItem3, Me.LayoutControlItem4, Me.EmptySpaceItem1})
         Me.Root.Name = "Root"
         Me.Root.Size = New System.Drawing.Size(1207, 902)
         Me.Root.TextVisible = False
@@ -219,18 +220,18 @@
         'LayoutControlItem2
         '
         Me.LayoutControlItem2.Control = Me.GridControl1
-        Me.LayoutControlItem2.Location = New System.Drawing.Point(0, 34)
+        Me.LayoutControlItem2.Location = New System.Drawing.Point(0, 0)
         Me.LayoutControlItem2.Name = "LayoutControlItem2"
-        Me.LayoutControlItem2.Size = New System.Drawing.Size(1181, 808)
+        Me.LayoutControlItem2.Size = New System.Drawing.Size(1181, 842)
         Me.LayoutControlItem2.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem2.TextVisible = False
         '
         'LayoutControlItem3
         '
         Me.LayoutControlItem3.Control = Me.btnSignSelected
-        Me.LayoutControlItem3.Location = New System.Drawing.Point(986, 842)
+        Me.LayoutControlItem3.Location = New System.Drawing.Point(1022, 842)
         Me.LayoutControlItem3.Name = "LayoutControlItem3"
-        Me.LayoutControlItem3.Size = New System.Drawing.Size(195, 34)
+        Me.LayoutControlItem3.Size = New System.Drawing.Size(159, 34)
         Me.LayoutControlItem3.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem3.TextVisible = False
         '
@@ -239,42 +240,8 @@
         Me.EmptySpaceItem2.AllowHotTrack = False
         Me.EmptySpaceItem2.Location = New System.Drawing.Point(101, 842)
         Me.EmptySpaceItem2.Name = "EmptySpaceItem2"
-        Me.EmptySpaceItem2.Size = New System.Drawing.Size(885, 34)
+        Me.EmptySpaceItem2.Size = New System.Drawing.Size(382, 34)
         Me.EmptySpaceItem2.TextSize = New System.Drawing.Size(0, 0)
-        '
-        'LayoutControlItem4
-        '
-        Me.LayoutControlItem4.Control = Me.btnSelectCompliant
-        Me.LayoutControlItem4.Location = New System.Drawing.Point(0, 0)
-        Me.LayoutControlItem4.Name = "LayoutControlItem4"
-        Me.LayoutControlItem4.Size = New System.Drawing.Size(250, 34)
-        Me.LayoutControlItem4.TextSize = New System.Drawing.Size(0, 0)
-        Me.LayoutControlItem4.TextVisible = False
-        '
-        'LayoutControlItem5
-        '
-        Me.LayoutControlItem5.Control = Me.btnSelectAllNonCompliant
-        Me.LayoutControlItem5.Location = New System.Drawing.Point(285, 0)
-        Me.LayoutControlItem5.Name = "LayoutControlItem5"
-        Me.LayoutControlItem5.Size = New System.Drawing.Size(267, 34)
-        Me.LayoutControlItem5.TextSize = New System.Drawing.Size(0, 0)
-        Me.LayoutControlItem5.TextVisible = False
-        '
-        'EmptySpaceItem3
-        '
-        Me.EmptySpaceItem3.AllowHotTrack = False
-        Me.EmptySpaceItem3.Location = New System.Drawing.Point(250, 0)
-        Me.EmptySpaceItem3.Name = "EmptySpaceItem3"
-        Me.EmptySpaceItem3.Size = New System.Drawing.Size(35, 34)
-        Me.EmptySpaceItem3.TextSize = New System.Drawing.Size(0, 0)
-        '
-        'EmptySpaceItem1
-        '
-        Me.EmptySpaceItem1.AllowHotTrack = False
-        Me.EmptySpaceItem1.Location = New System.Drawing.Point(552, 0)
-        Me.EmptySpaceItem1.Name = "EmptySpaceItem1"
-        Me.EmptySpaceItem1.Size = New System.Drawing.Size(629, 34)
-        Me.EmptySpaceItem1.TextSize = New System.Drawing.Size(0, 0)
         '
         'LayoutControlItem6
         '
@@ -285,15 +252,51 @@
         Me.LayoutControlItem6.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem6.TextVisible = False
         '
+        'LayoutControlItem5
+        '
+        Me.LayoutControlItem5.Control = Me.btnSelectNonCompliant
+        Me.LayoutControlItem5.Location = New System.Drawing.Point(725, 842)
+        Me.LayoutControlItem5.Name = "LayoutControlItem5"
+        Me.LayoutControlItem5.Size = New System.Drawing.Size(247, 34)
+        Me.LayoutControlItem5.TextSize = New System.Drawing.Size(0, 0)
+        Me.LayoutControlItem5.TextVisible = False
+        '
+        'EmptySpaceItem3
+        '
+        Me.EmptySpaceItem3.AllowHotTrack = False
+        Me.EmptySpaceItem3.Location = New System.Drawing.Point(972, 842)
+        Me.EmptySpaceItem3.Name = "EmptySpaceItem3"
+        Me.EmptySpaceItem3.Size = New System.Drawing.Size(50, 34)
+        Me.EmptySpaceItem3.TextSize = New System.Drawing.Size(0, 0)
+        '
+        'LayoutControlItem4
+        '
+        Me.LayoutControlItem4.Control = Me.btnSelectCompliant
+        Me.LayoutControlItem4.Location = New System.Drawing.Point(483, 842)
+        Me.LayoutControlItem4.Name = "LayoutControlItem4"
+        Me.LayoutControlItem4.Size = New System.Drawing.Size(208, 34)
+        Me.LayoutControlItem4.TextSize = New System.Drawing.Size(0, 0)
+        Me.LayoutControlItem4.TextVisible = False
+        '
+        'EmptySpaceItem1
+        '
+        Me.EmptySpaceItem1.AllowHotTrack = False
+        Me.EmptySpaceItem1.Location = New System.Drawing.Point(691, 842)
+        Me.EmptySpaceItem1.Name = "EmptySpaceItem1"
+        Me.EmptySpaceItem1.Size = New System.Drawing.Size(34, 34)
+        Me.EmptySpaceItem1.TextSize = New System.Drawing.Size(0, 0)
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 18.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1207, 902)
         Me.Controls.Add(Me.LayoutControl1)
+        Me.IconOptions.SvgImage = CType(resources.GetObject("frmMain.IconOptions.SvgImage"), DevExpress.Utils.Svg.SvgImage)
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "frmMain"
-        Me.Text = "Form1"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Text = "Toolbox Forms Signature Tool"
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.LayoutControl1.ResumeLayout(False)
         CType(Me.GridControl1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -304,11 +307,11 @@
         CType(Me.LayoutControlItem2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmptySpaceItem2, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.LayoutControlItem4, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem6, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmptySpaceItem3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmptySpaceItem1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.LayoutControlItem6, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -325,7 +328,7 @@
     Friend WithEvents colSigPageCount As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents colFile As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents RepositoryItemButtonEdit1 As DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit
-    Friend WithEvents btnSelectAllNonCompliant As DevExpress.XtraEditors.CheckButton
+    Friend WithEvents btnSelectNonCompliant As DevExpress.XtraEditors.CheckButton
     Friend WithEvents btnSelectCompliant As DevExpress.XtraEditors.CheckButton
     Friend WithEvents btnSignSelected As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents LayoutControlItem3 As DevExpress.XtraLayout.LayoutControlItem

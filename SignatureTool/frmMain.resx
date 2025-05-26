@@ -120,4 +120,24 @@
   <metadata name="bsGridItems.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <assembly alias="DevExpress.Data.v22.1" name="DevExpress.Data.v22.1, Version=22.1.14.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <data name="frmMain.IconOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v22.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFpEZXZFeHByZXNzLkRhdGEudjIyLjEsIFZlcnNpb249MjIuMS4x
+        NC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI4OGQxNzU0ZDcwMGU0OWEFAQAAAB1E
+        ZXZFeHByZXNzLlV0aWxzLlN2Zy5TdmdJbWFnZQEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADCAgAAAu+7
+        vzw/eG1sIHZlcnNpb249JzEuMCcgZW5jb2Rpbmc9J1VURi04Jz8+DQo8c3ZnIHg9IjBweCIgeT0iMHB4
+        IiB2aWV3Qm94PSIwIDAgMzIgMzIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3Jn
+        LzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sOnNw
+        YWNlPSJwcmVzZXJ2ZSIgaWQ9IkxpbmVfQ29sb3IiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcg
+        MCAwIDMyIDMyIj4NCiAgPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5CbGFja3tmaWxsOiM3MjcyNzI7
+        fQoJLkJsdWV7ZmlsbDojMTE3N0Q3O30KCS5zdDB7ZmlsbDpub25lO30KCS5zdDF7b3BhY2l0eTowLjI1
+        O30KPC9zdHlsZT4NCiAgPHBhdGggZD0iTTE3LDExTDcsMjFsLTQtNEwxMyw3TDE3LDExeiBNMTgsMTBs
+        MS43LTEuN2MwLjQtMC40LDAuNC0xLDAtMS4zTDE3LDQuM2MtMC40LTAuNC0xLTAuNC0xLjMsMEwxNCw2
+        TDE4LDEweiAgIE0yLDE4djRoNEwyLDE4eiIgY2xhc3M9IkJsdWUiIC8+DQogIDxyZWN0IHg9IjAiIHk9
+        IjI0IiB3aWR0aD0iMzIiIGhlaWdodD0iOCIgaWQ9IkluZGljYXRvciIgY2xhc3M9InN0MCIgLz4NCiAg
+        PGcgY2xhc3M9InN0MSI+DQogICAgPHBhdGggZD0iTTAsMjMuOVYzMmgzMnYtOC4xSDB6IE0zMCwzMEgy
+        di00aDI4VjMweiIgY2xhc3M9IkJsYWNrIiAvPg0KICA8L2c+DQo8L3N2Zz4L
+</value>
+  </data>
 </root>
