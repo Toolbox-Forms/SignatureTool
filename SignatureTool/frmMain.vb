@@ -22,6 +22,7 @@ Partial Public Class frmMain
             Dim ser As New XmlSerializer(GetType(Settings))
             Using rdr As New FileStream("Settings.xml", FileMode.Open)
                 Settings = CType(ser.Deserialize(rdr), Settings)
+                CheckSignaturePresent()
                 RefreshGrid()
             End Using
         Else
@@ -104,44 +105,20 @@ Partial Public Class frmMain
         End If
     End Sub
 
-    Private Sub btnSelectCompliant_CheckedChanged(sender As Object, e As EventArgs) Handles btnSelectCompliant.CheckedChanged
-        For Each i In FileList
-            If i.Compliant = "Yes" Then
-                i.Selected = btnSelectCompliant.Checked
-            End If
-        Next
-        bsGridItems.ResetBindings(False)
-        Select Case btnSelectCompliant.Checked
-            Case True
-                btnSelectCompliant.Text = "Unselect All Compliant Units"
-            Case Else
-                btnSelectCompliant.Text = "Select All Compliant Units"
-        End Select
-    End Sub
-
     Private Sub btnSettings_Click(sender As Object, e As EventArgs) Handles btnSettings.Click
         Dim frm As New frmSettings
-        Dim result = frm.ShowDialog(Me)
-        If result = DialogResult.OK Then
+        If frm.ShowDialog(Me) = DialogResult.OK Then
             Settings = frm.Settings
+            CheckSignaturePresent
             RefreshGrid()
         End If
-        frmSettings.Hide()
+        'frm.Close()
     End Sub
 
-    Private Sub btnSelectAllNonCompliant_CheckedChanged(sender As Object, e As EventArgs) Handles btnSelectNonCompliant.CheckedChanged
-        For Each i In FileList
-            If i.Compliant = "No" Then
-                i.Selected = btnSelectNonCompliant.Checked
-            End If
-        Next
-        bsGridItems.ResetBindings(False)
-        Select Case btnSelectNonCompliant.Checked
-            Case True
-                btnSelectNonCompliant.Text = "Unselect All Non-Compliant Units"
-            Case Else
-                btnSelectNonCompliant.Text = "Select All Non-Compliant Units"
-        End Select
+    Private Sub CheckSignaturePresent()
+        If Settings.Signature.Length = 0 Then
+            XtraMessageBox.Show("No signature is currently set. Please create a signature using the Settings button before signing files!", "Warning", MessageBoxButtons.OK)
+        End If
     End Sub
 
     Private Sub btnSignSelected_Click(sender As Object, e As EventArgs) Handles btnSignSelected.Click
@@ -162,6 +139,24 @@ Partial Public Class frmMain
             End If
         Next
         MsgBox("Done")
+    End Sub
+
+    Private Sub chkSelectCompliant_CheckedChanged(sender As Object, e As EventArgs) Handles chkSelectCompliant.CheckedChanged
+        For Each i In FileList
+            If i.Compliant = "Yes" Then
+                i.Selected = chkSelectCompliant.Checked
+            End If
+        Next
+        bsGridItems.ResetBindings(False)
+    End Sub
+
+    Private Sub chkSelectNonCompliant_CheckedChanged(sender As Object, e As EventArgs) Handles chkSelectNonCompliant.CheckedChanged
+        For Each i In FileList
+            If i.Compliant = "No" Then
+                i.Selected = chkSelectNonCompliant.Checked
+            End If
+        Next
+        bsGridItems.ResetBindings(False)
     End Sub
 End Class
 

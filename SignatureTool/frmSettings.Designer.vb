@@ -20,16 +20,6 @@ Partial Class frmSettings
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim EditorButtonImageOptions1 As DevExpress.XtraEditors.Controls.EditorButtonImageOptions = New DevExpress.XtraEditors.Controls.EditorButtonImageOptions()
-        Dim SerializableAppearanceObject1 As DevExpress.Utils.SerializableAppearanceObject = New DevExpress.Utils.SerializableAppearanceObject()
-        Dim SerializableAppearanceObject2 As DevExpress.Utils.SerializableAppearanceObject = New DevExpress.Utils.SerializableAppearanceObject()
-        Dim SerializableAppearanceObject3 As DevExpress.Utils.SerializableAppearanceObject = New DevExpress.Utils.SerializableAppearanceObject()
-        Dim SerializableAppearanceObject4 As DevExpress.Utils.SerializableAppearanceObject = New DevExpress.Utils.SerializableAppearanceObject()
-        Dim EditorButtonImageOptions2 As DevExpress.XtraEditors.Controls.EditorButtonImageOptions = New DevExpress.XtraEditors.Controls.EditorButtonImageOptions()
-        Dim SerializableAppearanceObject5 As DevExpress.Utils.SerializableAppearanceObject = New DevExpress.Utils.SerializableAppearanceObject()
-        Dim SerializableAppearanceObject6 As DevExpress.Utils.SerializableAppearanceObject = New DevExpress.Utils.SerializableAppearanceObject()
-        Dim SerializableAppearanceObject7 As DevExpress.Utils.SerializableAppearanceObject = New DevExpress.Utils.SerializableAppearanceObject()
-        Dim SerializableAppearanceObject8 As DevExpress.Utils.SerializableAppearanceObject = New DevExpress.Utils.SerializableAppearanceObject()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmSettings))
         Me.LayoutControl1 = New DevExpress.XtraLayout.LayoutControl()
         Me.inkSignature = New Microsoft.Ink.InkPicture()
@@ -48,11 +38,11 @@ Partial Class frmSettings
         Me.LayoutControlGroup1 = New DevExpress.XtraLayout.LayoutControlGroup()
         Me.EmptySpaceItem1 = New DevExpress.XtraLayout.EmptySpaceItem()
         Me.LayoutControlItem6 = New DevExpress.XtraLayout.LayoutControlItem()
+        Me.LayoutControlItem5 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem7 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.LayoutControlItem8 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.EmptySpaceItem2 = New DevExpress.XtraLayout.EmptySpaceItem()
         Me.EmptySpaceItem3 = New DevExpress.XtraLayout.EmptySpaceItem()
-        Me.LayoutControlItem5 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.bsSettings = New System.Windows.Forms.BindingSource(Me.components)
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.LayoutControl1.SuspendLayout()
@@ -69,11 +59,11 @@ Partial Class frmSettings
         CType(Me.LayoutControlGroup1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem6, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem7, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LayoutControlItem8, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem3, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.LayoutControlItem5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.bsSettings, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -98,12 +88,13 @@ Partial Class frmSettings
         'inkSignature
         '
         Me.inkSignature.BackColor = System.Drawing.Color.White
-        Me.inkSignature.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.inkSignature.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.inkSignature.Cursor = System.Windows.Forms.Cursors.Hand
         Me.inkSignature.Location = New System.Drawing.Point(32, 201)
         Me.inkSignature.MaximumSize = New System.Drawing.Size(500, 100)
         Me.inkSignature.Name = "inkSignature"
         Me.inkSignature.Size = New System.Drawing.Size(500, 100)
+        Me.inkSignature.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
         Me.inkSignature.TabIndex = 8
         '
         'btnOK
@@ -141,7 +132,7 @@ Partial Class frmSettings
         Me.teCopySignedTo.DataBindings.Add(New System.Windows.Forms.Binding("EditValue", Me.bsSettings, "MoveSignedTo", True))
         Me.teCopySignedTo.Location = New System.Drawing.Point(148, 120)
         Me.teCopySignedTo.Name = "teCopySignedTo"
-        Me.teCopySignedTo.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Ellipsis, "", -1, True, True, True, EditorButtonImageOptions1, New DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), SerializableAppearanceObject1, SerializableAppearanceObject2, SerializableAppearanceObject3, SerializableAppearanceObject4, "", Nothing, Nothing, DevExpress.Utils.ToolTipAnchor.[Default])})
+        Me.teCopySignedTo.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton()})
         Me.teCopySignedTo.Size = New System.Drawing.Size(400, 32)
         Me.teCopySignedTo.StyleController = Me.LayoutControl1
         Me.teCopySignedTo.TabIndex = 7
@@ -170,7 +161,7 @@ Partial Class frmSettings
         Me.teCurrentFolder.DataBindings.Add(New System.Windows.Forms.Binding("EditValue", Me.bsSettings, "SearchFolder", True))
         Me.teCurrentFolder.Location = New System.Drawing.Point(148, 16)
         Me.teCurrentFolder.Name = "teCurrentFolder"
-        Me.teCurrentFolder.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Ellipsis, "", -1, True, True, True, EditorButtonImageOptions2, New DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), SerializableAppearanceObject5, SerializableAppearanceObject6, SerializableAppearanceObject7, SerializableAppearanceObject8, "", Nothing, Nothing, DevExpress.Utils.ToolTipAnchor.[Default])})
+        Me.teCurrentFolder.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton()})
         Me.teCurrentFolder.Properties.EditValueChangedDelay = 1000
         Me.teCurrentFolder.Properties.EditValueChangedFiringMode = DevExpress.XtraEditors.Controls.EditValueChangedFiringMode.Buffered
         Me.teCurrentFolder.Size = New System.Drawing.Size(400, 32)
@@ -249,6 +240,15 @@ Partial Class frmSettings
         Me.LayoutControlItem6.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem6.TextVisible = False
         '
+        'LayoutControlItem5
+        '
+        Me.LayoutControlItem5.Control = Me.inkSignature
+        Me.LayoutControlItem5.Location = New System.Drawing.Point(0, 0)
+        Me.LayoutControlItem5.Name = "LayoutControlItem5"
+        Me.LayoutControlItem5.Size = New System.Drawing.Size(506, 106)
+        Me.LayoutControlItem5.TextSize = New System.Drawing.Size(0, 0)
+        Me.LayoutControlItem5.TextVisible = False
+        '
         'LayoutControlItem7
         '
         Me.LayoutControlItem7.Control = Me.btnCancel
@@ -283,15 +283,6 @@ Partial Class frmSettings
         Me.EmptySpaceItem3.Size = New System.Drawing.Size(11, 34)
         Me.EmptySpaceItem3.TextSize = New System.Drawing.Size(0, 0)
         '
-        'LayoutControlItem5
-        '
-        Me.LayoutControlItem5.Control = Me.inkSignature
-        Me.LayoutControlItem5.Location = New System.Drawing.Point(0, 0)
-        Me.LayoutControlItem5.Name = "LayoutControlItem5"
-        Me.LayoutControlItem5.Size = New System.Drawing.Size(506, 106)
-        Me.LayoutControlItem5.TextSize = New System.Drawing.Size(0, 0)
-        Me.LayoutControlItem5.TextVisible = False
-        '
         'bsSettings
         '
         Me.bsSettings.DataSource = GetType(SignatureTool.Settings)
@@ -310,6 +301,7 @@ Partial Class frmSettings
         Me.Text = "Settings"
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.LayoutControl1.ResumeLayout(False)
+        Me.LayoutControl1.PerformLayout()
         CType(Me.inkSignature, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.teCopySignedTo.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.chkSearchSubdirectories.Properties, System.ComponentModel.ISupportInitialize).EndInit()
@@ -323,11 +315,11 @@ Partial Class frmSettings
         CType(Me.LayoutControlGroup1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmptySpaceItem1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem6, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem7, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LayoutControlItem8, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmptySpaceItem2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmptySpaceItem3, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.LayoutControlItem5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.bsSettings, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

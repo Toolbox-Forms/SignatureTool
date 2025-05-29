@@ -3,6 +3,7 @@ Imports System.Xml.Serialization
 
 Imports DevExpress.XtraEditors
 
+Imports Microsoft.Ink
 Imports Microsoft.WindowsAPICodePack.Dialogs
 
 Public Class frmSettings
@@ -13,13 +14,25 @@ Public Class frmSettings
         bsSettings.DataSource = Settings
         inkSignature.DefaultDrawingAttributes.Width = 125
         inkSignature.DefaultDrawingAttributes.Height = 125
-        'Dim x As Rectangle
+
+        'Dim x As New Rectangle With {.Location = New Point With {.X = inkSignature.Location.X,
+        '                                                         .Y = inkSignature.Location.Y},
+        '                             .Height = inkSignature.Height,
+        '                             .Width = inkSignature.Width}
+
+        'Dim x As New Rectangle With {.Location = New Point With {.X = 1,
+        '                                                         .Y = 1},
+        '                             .Height = 250,
+        '                             .Width = 250}
+
         'inkSignature.GetWindowInputRectangle(x)
-        'x.Height = 100
         'x.Width = 500
         'x.X = inkSignature.Location.X
         'x.Y = inkSignature.Location.Y
+
         'inkSignature.SetWindowInputRectangle(x)
+        inkSignature.DefaultDrawingAttributes = New DrawingAttributes With {.Height = 100, .Width = 100}
+
         'MsgBox("Here")
     End Sub
 
@@ -39,13 +52,40 @@ Public Class frmSettings
     End Sub
 
     Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
-        Settings.Signature = inkSignature.Ink.Save(Microsoft.Ink.PersistenceFormat.Gif)
+        If inkSignature.Ink.Strokes.Count = 0 Then
+            Settings.Signature = New Byte() {}
+        Else
+            'The InkPicture collects strokes over the entire desktop. We need
+            ' clip the ink to just what's contained in the Ink control.
+            '
+            'Upper left clip point is 0,0
+            'Lower right clip point, based on size of control
+            Dim g = inkSignature.CreateGraphics
+            'Dim LRClip = New Point(inkSignature.Height, inkSignature.Width)
+            Dim LRClip = New Point(CInt(g.VisibleClipBounds.Height), CInt(g.VisibleClipBounds.Width))
+            'Need a Graphics opject for conversion from Pixels to InkSpace
+            'Convert the LRClip point to an Ink Space point
+            inkSignature.Renderer.PixelToInkSpace(g, LRClip)
+            'Clip the ink to the size of the control
+            inkSignature.Ink.Clip(New Rectangle With {.X = 0,
+                                                        .Y = 0,
+                                                        .Height = LRClip.X,
+                                                        .Width = LRClip.Y})
+            If inkSignature.Ink.Strokes.Count = 0 Then
+                Settings.Signature = New Byte() {}
+            Else
+                Settings.Signature = inkSignature.Ink.Save(Microsoft.Ink.PersistenceFormat.Gif)
+                Dim imagestream As MemoryStream
+                imagestream = New MemoryStream(Settings.Signature)
+            End If
+
+        End If
         bsSettings.ResetBindings(False)
         Dim ser As XmlSerializer = New XmlSerializer(GetType(Settings))
         Dim writer As StreamWriter = New StreamWriter("Settings.xml")
         ser.Serialize(writer, Settings)
         writer.Close()
-        btnOK.DialogResult = DialogResult.OK
+        DialogResult = DialogResult.OK
     End Sub
 
     Private Sub teCopySignedTo_Properties_ButtonClick(sender As Object, e As DevExpress.XtraEditors.Controls.ButtonPressedEventArgs) Handles teCopySignedTo.Properties.ButtonClick
@@ -66,6 +106,7 @@ Public Class frmSettings
             Me.Select(True, True)
         End If
     End Sub
+
 End Class
 
 Public Class Settings
