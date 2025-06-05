@@ -58,12 +58,11 @@ Public Class frmSettings
             'The InkPicture collects strokes over the entire desktop. We need
             ' clip the ink to just what's contained in the Ink control.
             '
+            'Need a Graphics opject for conversion from Pixels to InkSpace
+            Dim g = inkSignature.CreateGraphics
             'Upper left clip point is 0,0
             'Lower right clip point, based on size of control
-            Dim g = inkSignature.CreateGraphics
-            'Dim LRClip = New Point(inkSignature.Height, inkSignature.Width)
             Dim LRClip = New Point(CInt(g.VisibleClipBounds.Height), CInt(g.VisibleClipBounds.Width))
-            'Need a Graphics opject for conversion from Pixels to InkSpace
             'Convert the LRClip point to an Ink Space point
             inkSignature.Renderer.PixelToInkSpace(g, LRClip)
             'Clip the ink to the size of the control
@@ -72,7 +71,7 @@ Public Class frmSettings
                                                         .Height = LRClip.X,
                                                         .Width = LRClip.Y})
             If inkSignature.Ink.Strokes.Count = 0 Then
-                Settings.Signature = New Byte() {}
+                Settings.Signature = New Byte() {}  'No signature, save an empty array
             Else
                 Settings.Signature = inkSignature.Ink.Save(Microsoft.Ink.PersistenceFormat.Gif)
                 Dim imagestream As MemoryStream

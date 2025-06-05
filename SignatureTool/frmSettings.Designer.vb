@@ -88,7 +88,7 @@ Partial Class frmSettings
         'inkSignature
         '
         Me.inkSignature.BackColor = System.Drawing.Color.White
-        Me.inkSignature.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.inkSignature.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.inkSignature.Cursor = System.Windows.Forms.Cursors.Hand
         Me.inkSignature.Location = New System.Drawing.Point(32, 201)
         Me.inkSignature.MaximumSize = New System.Drawing.Size(500, 100)

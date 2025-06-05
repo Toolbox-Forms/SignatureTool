@@ -109,7 +109,7 @@ Partial Public Class frmMain
         Dim frm As New frmSettings
         If frm.ShowDialog(Me) = DialogResult.OK Then
             Settings = frm.Settings
-            CheckSignaturePresent
+            CheckSignaturePresent()
             RefreshGrid()
         End If
         'frm.Close()
@@ -126,14 +126,27 @@ Partial Public Class frmMain
             If f.Selected Then
                 Using processor = New PdfDocumentProcessor
                     processor.LoadDocument(f.FullPath)
-                    Using gra As PdfGraphics = processor.CreateGraphics
-                        For Each p In f.SigPages
-                            Dim pge As PdfPage = processor.Document.Pages(p - 1)
-                            Dim pgecenter As New RectangleF(450, 975, 200, 30)
-                            gra.DrawImage(Settings.Signature, pgecenter)
-                            gra.AddToPageForeground(pge, 96, 96)
-                        Next
+                    Dim dateText As String = Format(Today, "Short Date")
+                    Dim sigLocation As New RectangleF(450, 990, 200, 30)
+                    Dim dateFont = New Font("Segoe UI", 9, FontStyle.Bold)
+                    Dim dateLocation As New PointF(520, 730)
+                    Dim dateBrush As New SolidBrush(Color.FromArgb(255, Color.Black))
+                    'For some reason, we can't use the same Graphics item for both the signature and the date
+                    Using gra1 As PdfGraphics = processor.CreateGraphics
+                        Using gra2 As PdfGraphics = processor.CreateGraphics
+                            gra1.DrawImage(Settings.Signature, sigLocation)
+                            gra2.DrawString(dateText, dateFont, dateBrush, dateLocation)
+                            For Each p In f.SigPages
+                                Dim pge As PdfPage = processor.Document.Pages(p - 1)
+                                'The DPI here doesn't change the resolution. It's to specify what resolution the source GIF is,
+                                ' to achieve proper coordinate transformation ('world' coordinates to 'page' coordinates).
+                                ' The InkPicture control uses whatever DPI Windows dictates, which, if Windows 'scaling' is set to 100%, is 96 DPI.
+                                gra1.AddToPageForeground(pge, 96, 96)
+                                gra2.AddToPageForeground(pge, 72, 72)
+                            Next
+                        End Using
                     End Using
+                    processor.FlattenForm()
                     processor.SaveDocument("c:\users\user\desktop\test.pdf")
                 End Using
             End If
