@@ -17,9 +17,22 @@ Partial Public Class frmMain
 
     Public Sub New()
         InitializeComponent()
+
         If My.Computer.FileSystem.FileExists(My.Application.Info.DirectoryPath & "\wyupdate.exe") Then
-            CheckForUpdate(True)
+            Dim p As New System.Diagnostics.Process()
+            p.StartInfo.FileName = "wyupdate.exe"
+            p.StartInfo.Arguments = "/quickcheck /justcheck /noerr"
+            p.StartInfo.WorkingDirectory = My.Application.Info.DirectoryPath
+            p.Start()
+            p.WaitForExit()
+            If p.ExitCode = 2 Then
+                'Update Available
+                p.StartInfo.Arguments = ""
+                p.Start()
+                End  'End this application. The updater will restart it.
+            End If
         End If
+
         Settings = New Settings
         If File.Exists("Settings.xml") Then
             Dim ser As New XmlSerializer(GetType(Settings))
@@ -29,7 +42,7 @@ Partial Public Class frmMain
                 RefreshGrid()
             End Using
         Else
-            XtraMessageBox.Show("Settings file not found. Be sure to set the configuration using the Settings button before signing!", "Warning", MessageBoxButtons.OK)
+            XtraMessageBox.Show("Settings file not found. Set the configuration using the Settings button before signing!", "Warning", MessageBoxButtons.OK)
         End If
 
         'Dim x = New frmProgress
@@ -41,22 +54,6 @@ Partial Public Class frmMain
         '    System.Windows.Forms.Application.DoEvents()
         'Next
         'x.Close()
-    End Sub
-
-    Private Sub CheckForUpdate(Silent As Boolean)
-        Dim p As New System.Diagnostics.Process()
-        p.StartInfo.FileName = "wyupdate.exe"
-        p.StartInfo.Arguments = "/quickcheck /justcheck /noerr"
-        p.StartInfo.WorkingDirectory = My.Application.Info.DirectoryPath
-        p.Start()
-        p.WaitForExit()
-        If p.ExitCode = 2 Then
-            'Update Available
-            p.StartInfo.Arguments = "/skipinfo"
-            p.Start()
-            End  'End this application. The updater will restart it.
-        End If
-
     End Sub
 
     Private Sub RefreshGrid()
