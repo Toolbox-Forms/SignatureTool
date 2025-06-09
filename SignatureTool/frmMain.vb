@@ -17,6 +17,9 @@ Partial Public Class frmMain
 
     Public Sub New()
         InitializeComponent()
+        If My.Computer.FileSystem.FileExists(My.Application.Info.DirectoryPath & "\wyupdate.exe") Then
+            CheckForUpdate(True)
+        End If
         Settings = New Settings
         If File.Exists("Settings.xml") Then
             Dim ser As New XmlSerializer(GetType(Settings))
@@ -38,6 +41,22 @@ Partial Public Class frmMain
         '    System.Windows.Forms.Application.DoEvents()
         'Next
         'x.Close()
+    End Sub
+
+    Private Sub CheckForUpdate(Silent As Boolean)
+        Dim p As New System.Diagnostics.Process()
+        p.StartInfo.FileName = "wyupdate.exe"
+        p.StartInfo.Arguments = "/quickcheck /justcheck /noerr"
+        p.StartInfo.WorkingDirectory = My.Application.Info.DirectoryPath
+        p.Start()
+        p.WaitForExit()
+        If p.ExitCode = 2 Then
+            'Update Available
+            p.StartInfo.Arguments = "/skipinfo"
+            p.Start()
+            End  'End this application. The updater will restart it.
+        End If
+
     End Sub
 
     Private Sub RefreshGrid()
@@ -74,7 +93,7 @@ Partial Public Class frmMain
                         Dim pageText = PDFProcessor.GetPageText(i, New PdfTextExtractionOptions With {.ClipToCropBox = False})
                         If i = 1 Then
                             listItem.File = fileInfo.Name
-                            listItem.FullPath = fileInfo.FullName
+                            listItem.FullPath = fileInfo.DirectoryName
                             listItem.Compliant = "Unknown"
                             If pageText.IndexOf("NOT IN COMPLIANCE") > 0 Then
                                 listItem.Compliant = "No"
@@ -140,11 +159,13 @@ Partial Public Class frmMain
                             ' to achieve proper coordinate transformation ('world' coordinates to 'page' coordinates).
                             ' The InkPicture control uses whatever DPI Windows dictates, which, if Windows 'scaling' is set to 100%, is 96 DPI.
                             gra.AddToPageForeground(pge, 96, 96)
-                            'gra2.AddToPageForeground(pge, 72, 72)
                         Next
                     End Using
                     processor.FlattenForm()
-                    processor.SaveDocument("c:\users\user\desktop\test.pdf")
+                    Dim SaveFilePath = Replace(Path.GetFullPath(f.FullPath), Settings.SearchFolder, Settings.MoveSignedTo)
+                    Dim SaveFileName = Path.GetFileNameWithoutExtension(f.File) & "_signed"
+                    Dim x = SaveFilePath & "\" & SaveFileName & "." & Path.GetExtension(f.File)
+                    processor.SaveDocument(SaveFilePath & "\" & SaveFileName & "." & Path.GetExtension(f.File))
                 End Using
             End If
         Next

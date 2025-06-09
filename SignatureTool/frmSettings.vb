@@ -12,26 +12,27 @@ Public Class frmSettings
         Settings = frmMain.Settings
         inkSignature.Ink.Load(Settings.Signature)
         bsSettings.DataSource = Settings
-        inkSignature.DefaultDrawingAttributes.Width = 125
-        inkSignature.DefaultDrawingAttributes.Height = 125
+        lblVersion.Text = "Version: " & FileVersionInfo.GetVersionInfo(Application.ExecutablePath).FileVersion
+        'inkSignature.DefaultDrawingAttributes.Width = 125
+        'inkSignature.DefaultDrawingAttributes.Height = 125
 
-        'Dim x As New Rectangle With {.Location = New Point With {.X = inkSignature.Location.X,
-        '                                                         .Y = inkSignature.Location.Y},
-        '                             .Height = inkSignature.Height,
-        '                             .Width = inkSignature.Width}
+        ''Dim x As New Rectangle With {.Location = New Point With {.X = inkSignature.Location.X,
+        ''                                                         .Y = inkSignature.Location.Y},
+        ''                             .Height = inkSignature.Height,
+        ''                             .Width = inkSignature.Width}
 
-        'Dim x As New Rectangle With {.Location = New Point With {.X = 1,
-        '                                                         .Y = 1},
-        '                             .Height = 250,
-        '                             .Width = 250}
+        ''Dim x As New Rectangle With {.Location = New Point With {.X = 1,
+        ''                                                         .Y = 1},
+        ''                             .Height = 250,
+        ''                             .Width = 250}
 
-        'inkSignature.GetWindowInputRectangle(x)
-        'x.Width = 500
-        'x.X = inkSignature.Location.X
-        'x.Y = inkSignature.Location.Y
+        ''inkSignature.GetWindowInputRectangle(x)
+        ''x.Width = 500
+        ''x.X = inkSignature.Location.X
+        ''x.Y = inkSignature.Location.Y
 
-        'inkSignature.SetWindowInputRectangle(x)
-        inkSignature.DefaultDrawingAttributes = New DrawingAttributes With {.Height = 100, .Width = 100}
+        ''inkSignature.SetWindowInputRectangle(x)
+        'inkSignature.DefaultDrawingAttributes = New DrawingAttributes With {.Height = 100, .Width = 100}
 
         'MsgBox("Here")
     End Sub
@@ -106,6 +107,25 @@ Public Class frmSettings
         End If
     End Sub
 
+    Private Sub lblVersion_DoubleClick(sender As Object, e As EventArgs) Handles lblVersion.DoubleClick
+        If My.Computer.FileSystem.FileExists(My.Application.Info.DirectoryPath & "\wyupdate.exe") Then
+            Dim p As New System.Diagnostics.Process()
+            p.StartInfo.FileName = "wyupdate.exe"
+            p.StartInfo.Arguments = "/quickcheck /justcheck /noerr"
+            p.StartInfo.WorkingDirectory = My.Application.Info.DirectoryPath
+            p.Start()
+            p.WaitForExit()
+            If p.ExitCode = 2 Then
+                'Update Available
+                p.StartInfo.Arguments = "/skipinfo"
+                p.Start()
+                End  'End this application. The updater will restart it.
+            Else
+                XtraMessageBox.Show("No Updates Found", "Update", MessageBoxButtons.OK)
+            End If
+        End If
+
+    End Sub
 End Class
 
 Public Class Settings

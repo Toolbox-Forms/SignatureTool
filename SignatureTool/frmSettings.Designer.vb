@@ -22,11 +22,13 @@ Partial Class frmSettings
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmSettings))
         Me.LayoutControl1 = New DevExpress.XtraLayout.LayoutControl()
+        Me.lblVersion = New DevExpress.XtraEditors.LabelControl()
         Me.inkSignature = New Microsoft.Ink.InkPicture()
         Me.btnOK = New DevExpress.XtraEditors.SimpleButton()
         Me.btnCancel = New DevExpress.XtraEditors.SimpleButton()
         Me.btnSigClear = New DevExpress.XtraEditors.SimpleButton()
         Me.teCopySignedTo = New DevExpress.XtraEditors.ButtonEdit()
+        Me.bsSettings = New System.Windows.Forms.BindingSource(Me.components)
         Me.chkSearchSubdirectories = New DevExpress.XtraEditors.CheckEdit()
         Me.teFileNameSearch = New DevExpress.XtraEditors.TextEdit()
         Me.teCurrentFolder = New DevExpress.XtraEditors.ButtonEdit()
@@ -43,11 +45,13 @@ Partial Class frmSettings
         Me.LayoutControlItem8 = New DevExpress.XtraLayout.LayoutControlItem()
         Me.EmptySpaceItem2 = New DevExpress.XtraLayout.EmptySpaceItem()
         Me.EmptySpaceItem3 = New DevExpress.XtraLayout.EmptySpaceItem()
-        Me.bsSettings = New System.Windows.Forms.BindingSource(Me.components)
+        Me.LayoutControlItem9 = New DevExpress.XtraLayout.LayoutControlItem()
+        Me.EmptySpaceItem4 = New DevExpress.XtraLayout.EmptySpaceItem()
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.LayoutControl1.SuspendLayout()
         CType(Me.inkSignature, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.teCopySignedTo.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.bsSettings, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.chkSearchSubdirectories.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.teFileNameSearch.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.teCurrentFolder.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -64,11 +68,13 @@ Partial Class frmSettings
         CType(Me.LayoutControlItem8, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EmptySpaceItem3, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.bsSettings, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LayoutControlItem9, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.EmptySpaceItem4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'LayoutControl1
         '
+        Me.LayoutControl1.Controls.Add(Me.lblVersion)
         Me.LayoutControl1.Controls.Add(Me.inkSignature)
         Me.LayoutControl1.Controls.Add(Me.btnOK)
         Me.LayoutControl1.Controls.Add(Me.btnCancel)
@@ -85,12 +91,25 @@ Partial Class frmSettings
         Me.LayoutControl1.TabIndex = 0
         Me.LayoutControl1.Text = "LayoutControl1"
         '
+        'lblVersion
+        '
+        Me.lblVersion.Appearance.Font = New System.Drawing.Font("Tahoma", 8.0!)
+        Me.lblVersion.Appearance.Options.UseFont = True
+        Me.lblVersion.Location = New System.Drawing.Point(16, 372)
+        Me.lblVersion.Name = "lblVersion"
+        Me.lblVersion.Size = New System.Drawing.Size(39, 13)
+        Me.lblVersion.StyleController = Me.LayoutControl1
+        Me.lblVersion.TabIndex = 12
+        Me.lblVersion.Text = "Version:"
+        '
         'inkSignature
         '
         Me.inkSignature.BackColor = System.Drawing.Color.White
         Me.inkSignature.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.inkSignature.Cursor = System.Windows.Forms.Cursors.Hand
         Me.inkSignature.Location = New System.Drawing.Point(32, 201)
+        Me.inkSignature.MarginX = -2147483648
+        Me.inkSignature.MarginY = -2147483648
         Me.inkSignature.MaximumSize = New System.Drawing.Size(500, 100)
         Me.inkSignature.Name = "inkSignature"
         Me.inkSignature.Size = New System.Drawing.Size(500, 100)
@@ -101,9 +120,9 @@ Partial Class frmSettings
         '
         Me.btnOK.Appearance.Font = New System.Drawing.Font("Tahoma", 11.25!, System.Drawing.FontStyle.Bold)
         Me.btnOK.Appearance.Options.UseFont = True
-        Me.btnOK.Location = New System.Drawing.Point(389, 357)
+        Me.btnOK.Location = New System.Drawing.Point(323, 357)
         Me.btnOK.Name = "btnOK"
-        Me.btnOK.Size = New System.Drawing.Size(73, 28)
+        Me.btnOK.Size = New System.Drawing.Size(105, 28)
         Me.btnOK.StyleController = Me.LayoutControl1
         Me.btnOK.TabIndex = 11
         Me.btnOK.Text = "OK"
@@ -111,9 +130,9 @@ Partial Class frmSettings
         'btnCancel
         '
         Me.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.btnCancel.Location = New System.Drawing.Point(479, 357)
+        Me.btnCancel.Location = New System.Drawing.Point(449, 357)
         Me.btnCancel.Name = "btnCancel"
-        Me.btnCancel.Size = New System.Drawing.Size(69, 28)
+        Me.btnCancel.Size = New System.Drawing.Size(99, 28)
         Me.btnCancel.StyleController = Me.LayoutControl1
         Me.btnCancel.TabIndex = 10
         Me.btnCancel.Text = "Cancel"
@@ -136,6 +155,10 @@ Partial Class frmSettings
         Me.teCopySignedTo.Size = New System.Drawing.Size(400, 32)
         Me.teCopySignedTo.StyleController = Me.LayoutControl1
         Me.teCopySignedTo.TabIndex = 7
+        '
+        'bsSettings
+        '
+        Me.bsSettings.DataSource = GetType(SignatureTool.Settings)
         '
         'chkSearchSubdirectories
         '
@@ -172,7 +195,7 @@ Partial Class frmSettings
         '
         Me.Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.[True]
         Me.Root.GroupBordersVisible = False
-        Me.Root.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem1, Me.LayoutControlItem2, Me.LayoutControlItem3, Me.LayoutControlItem4, Me.LayoutControlGroup1, Me.LayoutControlItem7, Me.LayoutControlItem8, Me.EmptySpaceItem2, Me.EmptySpaceItem3})
+        Me.Root.Items.AddRange(New DevExpress.XtraLayout.BaseLayoutItem() {Me.LayoutControlItem1, Me.LayoutControlItem2, Me.LayoutControlItem3, Me.LayoutControlItem4, Me.LayoutControlGroup1, Me.LayoutControlItem7, Me.LayoutControlItem8, Me.EmptySpaceItem2, Me.EmptySpaceItem3, Me.LayoutControlItem9, Me.EmptySpaceItem4})
         Me.Root.Name = "Root"
         Me.Root.Size = New System.Drawing.Size(564, 401)
         Me.Root.TextVisible = False
@@ -252,40 +275,53 @@ Partial Class frmSettings
         'LayoutControlItem7
         '
         Me.LayoutControlItem7.Control = Me.btnCancel
-        Me.LayoutControlItem7.Location = New System.Drawing.Point(463, 341)
+        Me.LayoutControlItem7.Location = New System.Drawing.Point(433, 341)
         Me.LayoutControlItem7.Name = "LayoutControlItem7"
-        Me.LayoutControlItem7.Size = New System.Drawing.Size(75, 34)
+        Me.LayoutControlItem7.Size = New System.Drawing.Size(105, 34)
         Me.LayoutControlItem7.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem7.TextVisible = False
         '
         'LayoutControlItem8
         '
         Me.LayoutControlItem8.Control = Me.btnOK
-        Me.LayoutControlItem8.Location = New System.Drawing.Point(373, 341)
+        Me.LayoutControlItem8.Location = New System.Drawing.Point(307, 341)
         Me.LayoutControlItem8.Name = "LayoutControlItem8"
-        Me.LayoutControlItem8.Size = New System.Drawing.Size(79, 34)
+        Me.LayoutControlItem8.Size = New System.Drawing.Size(111, 34)
         Me.LayoutControlItem8.TextSize = New System.Drawing.Size(0, 0)
         Me.LayoutControlItem8.TextVisible = False
         '
         'EmptySpaceItem2
         '
         Me.EmptySpaceItem2.AllowHotTrack = False
-        Me.EmptySpaceItem2.Location = New System.Drawing.Point(0, 341)
+        Me.EmptySpaceItem2.Location = New System.Drawing.Point(45, 341)
         Me.EmptySpaceItem2.Name = "EmptySpaceItem2"
-        Me.EmptySpaceItem2.Size = New System.Drawing.Size(373, 34)
+        Me.EmptySpaceItem2.Size = New System.Drawing.Size(262, 34)
         Me.EmptySpaceItem2.TextSize = New System.Drawing.Size(0, 0)
         '
         'EmptySpaceItem3
         '
         Me.EmptySpaceItem3.AllowHotTrack = False
-        Me.EmptySpaceItem3.Location = New System.Drawing.Point(452, 341)
+        Me.EmptySpaceItem3.Location = New System.Drawing.Point(418, 341)
         Me.EmptySpaceItem3.Name = "EmptySpaceItem3"
-        Me.EmptySpaceItem3.Size = New System.Drawing.Size(11, 34)
+        Me.EmptySpaceItem3.Size = New System.Drawing.Size(15, 34)
         Me.EmptySpaceItem3.TextSize = New System.Drawing.Size(0, 0)
         '
-        'bsSettings
+        'LayoutControlItem9
         '
-        Me.bsSettings.DataSource = GetType(SignatureTool.Settings)
+        Me.LayoutControlItem9.Control = Me.lblVersion
+        Me.LayoutControlItem9.Location = New System.Drawing.Point(0, 356)
+        Me.LayoutControlItem9.Name = "LayoutControlItem9"
+        Me.LayoutControlItem9.Size = New System.Drawing.Size(45, 19)
+        Me.LayoutControlItem9.TextSize = New System.Drawing.Size(0, 0)
+        Me.LayoutControlItem9.TextVisible = False
+        '
+        'EmptySpaceItem4
+        '
+        Me.EmptySpaceItem4.AllowHotTrack = False
+        Me.EmptySpaceItem4.Location = New System.Drawing.Point(0, 341)
+        Me.EmptySpaceItem4.Name = "EmptySpaceItem4"
+        Me.EmptySpaceItem4.Size = New System.Drawing.Size(45, 15)
+        Me.EmptySpaceItem4.TextSize = New System.Drawing.Size(0, 0)
         '
         'frmSettings
         '
@@ -301,9 +337,9 @@ Partial Class frmSettings
         Me.Text = "Settings"
         CType(Me.LayoutControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.LayoutControl1.ResumeLayout(False)
-        Me.LayoutControl1.PerformLayout()
         CType(Me.inkSignature, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.teCopySignedTo.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.bsSettings, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.chkSearchSubdirectories.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.teFileNameSearch.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.teCurrentFolder.Properties, System.ComponentModel.ISupportInitialize).EndInit()
@@ -320,7 +356,8 @@ Partial Class frmSettings
         CType(Me.LayoutControlItem8, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmptySpaceItem2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EmptySpaceItem3, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.bsSettings, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LayoutControlItem9, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.EmptySpaceItem4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -348,4 +385,7 @@ Partial Class frmSettings
     Friend WithEvents EmptySpaceItem3 As DevExpress.XtraLayout.EmptySpaceItem
     Friend WithEvents bsSettings As BindingSource
     Friend WithEvents LayoutControlItem5 As DevExpress.XtraLayout.LayoutControlItem
+    Friend WithEvents lblVersion As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents LayoutControlItem9 As DevExpress.XtraLayout.LayoutControlItem
+    Friend WithEvents EmptySpaceItem4 As DevExpress.XtraLayout.EmptySpaceItem
 End Class
