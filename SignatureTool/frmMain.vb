@@ -66,12 +66,54 @@ Partial Public Class frmMain
                 Dim frmProg = New frmProgress
                 frmProg.Show()
                 System.Windows.Forms.Application.DoEvents()
-                Dim fi = New DirectoryInfo(Settings.SearchFolder)
+
+                'Search for files to place in grid
+                Dim FoundFilesList As List(Of FileInfo) = New List(Of FileInfo)
+                Dim searchDirQ As New Queue(Of DirectoryInfo)
+                Dim searchFileQ As New Queue(Of DirectoryInfo)
+                'Add in each directory specified in the Params. These are NOT check for the sub-folder search pattern
+                searchDirQ.Enqueue(New DirectoryInfo(Settings.SearchFolder))
+                searchFileQ.Enqueue(New DirectoryInfo(Settings.SearchFolder))
+                'Create a list of sub-folder search patterns
+                If Settings.SearchPattern = "" Then Settings.SearchPattern = "*.pdf"
+                Dim searchDirPattern = Settings.SearchPattern
+                'Add in subfolders
+                If Settings.SearchSubfolders Then
+                    'Process each folder in the queue
+                    Do Until searchDirQ.Count = 0
+                        Dim directory = searchDirQ.Dequeue
+                        'Add any sub-folders within current folder
+                        Dim dirs() As DirectoryInfo = Nothing
+                        dirs = directory.GetDirectories
+                        For Each sd In dirs
+                            'Add this folder to list of folders to look in for subfolders
+                            searchDirQ.Enqueue(sd)
+                            For Each sfp In searchDirPattern
+                                If sd.Name Like sfp Then
+                                    'Add this folder to look for files in
+                                    searchFileQ.Enqueue(sd)
+                                End If
+                            Next
+                        Next
+                    Loop
+                End If
+                'searchFileQ should now contain the initial params.ReadFolders, and (if selected) any subdirectories within those trees that match params.SubfolderSearchPattern.
+                'Effectively, these are the folders we are going to look for files within.
+                Do Until searchFileQ.Count = 0
+                    Dim directory = searchFileQ.Dequeue
+                    'Search for files in current dir
+                    Dim flist As List(Of FileInfo) = New List(Of FileInfo)
+                    flist = directory.GetFiles(Settings.SearchPattern).ToList
+                    If flist.Count > 0 Then
+                        FoundFilesList.AddRange(flist)
+                    End If
+                Loop
+
+                frmProg.ProgressBarControl1.Properties.Maximum = FoundFilesList.Count
+
+                'Process each found file
                 FileList = New List(Of GridListItem)
-                If Settings.SearchPattern = "" Then Settings.SearchPattern = "*.*"
-                Dim ToDoList = fi.GetFiles(Settings.SearchPattern)
-                frmProg.ProgressBarControl1.Properties.Maximum = ToDoList.Count
-                For Each fileInfo In ToDoList
+                For Each fileInfo In FoundFilesList
                     frmProg.ProgressBarControl1.PerformStep()
                     frmProg.ProgressBarControl1.Update()
                     'System.Windows.Forms.Application.DoEvents()
@@ -87,13 +129,15 @@ Partial Public Class frmMain
                     Try
                         PDFProcessor.LoadDocument(fileInfo.FullName)
                     Catch ex As Exception
-                        MsgBox("Error loading " & fileInfo.Name)
+                        XtraMessageBox.Show("Error loading file '" & fileInfo.Name & "' as a PDF file. Skipping.", "Warning", MessageBoxButtons.OK)
+                        Continue For
                     End Try
                     For i = 1 To PDFProcessor.Document.Pages.Count
                         Dim pageText = PDFProcessor.GetPageText(i, New PdfTextExtractionOptions With {.ClipToCropBox = False})
                         If i = 1 Then
                             listItem.File = fileInfo.Name
                             listItem.FullPath = fileInfo.DirectoryName
+                            listItem.Selected = False
                             listItem.Compliant = "Unknown"
                             If pageText.IndexOf("NOT IN COMPLIANCE") > 0 Then
                                 listItem.Compliant = "No"
@@ -108,6 +152,8 @@ Partial Public Class frmMain
                     FileList.Add(listItem)
                 Next
                 bsGridItems.DataSource = FileList
+                chkSelectCompliant.CheckState = CheckState.Unchecked
+                chkSelectNonCompliant.CheckState = CheckState.Unchecked
                 Me.Cursor = Cursors.Default
                 frmProg.Close()
             End If
@@ -141,10 +187,60 @@ Partial Public Class frmMain
     End Sub
 
     Private Sub btnSignSelected_Click(sender As Object, e As EventArgs) Handles btnSignSelected.Click
+        Dim ToDoList As List(Of GridListItem) = New List(Of GridListItem)
+        Dim CompliantCount As Integer = 0
+        Dim NonCompliantCount As Integer = 0
+        Dim OtherCount As Integer = 0
         For Each f In FileList
             If f.Selected Then
+                ToDoList.Add(f)
+                Select Case f.Compliant
+                    Case "Yes"
+                        CompliantCount += 1
+                    Case "No"
+                        NonCompliantCount += 1
+                    Case Else
+                        OtherCount = 1
+                End Select
+            End If
+        Next
+        Dim DoConfirm As Boolean = False
+        If CompliantCount + NonCompliantCount + OtherCount > 0 Then
+            Dim ConfirmMsg As String = "You are about to sign:"
+            If CompliantCount > 0 Then
+                ConfirmMsg &= vbCrLf & "  " & CompliantCount.ToString & " Compliant Unit Inspection"
+                If CompliantCount > 1 Then ConfirmMsg &= "s"
+            End If
+            If NonCompliantCount > 0 Then
+                ConfirmMsg &= vbCrLf & "  " & NonCompliantCount.ToString & " NON-Compliant Unit Inspection"
+                If NonCompliantCount > 1 Then ConfirmMsg &= "s"
+            End If
+            If OtherCount > 0 Then
+                ConfirmMsg &= vbCrLf & "  " & OtherCount.ToString & " UNKNOWN Status Unit Inspection"
+                If OtherCount > 1 Then ConfirmMsg &= "s"
+            End If
+            If XtraMessageBox.Show(ConfirmMsg, "Confirm", MessageBoxButtons.OKCancel) = DialogResult.OK Then
+                DoConfirm = True
+            End If
+        Else
+            XtraMessageBox.Show("No documents selected for signing.", "Warning", MessageBoxButtons.OK)
+        End If
+
+        If DoConfirm Then
+            Me.Cursor = Cursors.WaitCursor
+            Dim frmProg = New frmProgress
+            frmProg.lblDescription.Text = "Signing Documents..."
+            frmProg.ProgressBarControl1.Properties.Maximum = ToDoList.Count
+            frmProg.Show()
+            System.Windows.Forms.Application.DoEvents()
+            For Each f In ToDoList
+                frmProg.ProgressBarControl1.PerformStep()
+                frmProg.ProgressBarControl1.Update()
+                Dim SaveOK As Boolean = False
                 Using processor = New PdfDocumentProcessor
-                    processor.LoadDocument(f.FullPath)
+                    'Load PDF
+                    processor.LoadDocument(f.FullPath & "\" & f.File)
+                    'Apply the signature
                     Dim dateText As String = Format(Today, "Short Date")
                     Dim sigLocation As New RectangleF(450, 990, 200, 30)
                     Dim dateFont = New Font("Segoe UI", 9, FontStyle.Bold)
@@ -157,19 +253,36 @@ Partial Public Class frmMain
                             Dim pge As PdfPage = processor.Document.Pages(p - 1)
                             'The DPI here doesn't change the resolution. It's to specify what resolution the source GIF is,
                             ' to achieve proper coordinate transformation ('world' coordinates to 'page' coordinates).
-                            ' The InkPicture control uses whatever DPI Windows dictates, which, if Windows 'scaling' is set to 100%, is 96 DPI.
+                            ' The InkPicture control uses whatever DPI Windows dictates, which is 96 DPI if Windows 'scaling' is set to 100%
                             gra.AddToPageForeground(pge, 96, 96)
                         Next
                     End Using
+                    'Save it
                     processor.FlattenForm()
                     Dim SaveFilePath = Replace(Path.GetFullPath(f.FullPath), Settings.SearchFolder, Settings.MoveSignedTo)
+                    If SaveFilePath = "" Then
+                        'Saving in the same dir as original file
+                        SaveFilePath = f.FullPath & "\"
+                    Else
+                        SaveFilePath &= "\"
+                        If Not Directory.Exists(SaveFilePath) Then
+                            Directory.CreateDirectory(SaveFilePath)
+                        End If
+                    End If
                     Dim SaveFileName = Path.GetFileNameWithoutExtension(f.File) & "_signed"
-                    Dim x = SaveFilePath & "\" & SaveFileName & "." & Path.GetExtension(f.File)
-                    processor.SaveDocument(SaveFilePath & "\" & SaveFileName & "." & Path.GetExtension(f.File))
+                    Dim x = SaveFilePath & SaveFileName & Path.GetExtension(f.File)
+                    processor.SaveDocument(SaveFilePath & SaveFileName & Path.GetExtension(f.File))
+                    SaveOK = True
                 End Using
-            End If
-        Next
-        MsgBox("Done")
+                If SaveOK Then
+                    File.Delete(f.FullPath & "\" & f.File)
+                End If
+            Next
+            Me.Cursor = Cursors.Default
+            frmProg.Close()
+            XtraMessageBox.Show("Signing complete", "Success", MessageBoxButtons.OK)
+            RefreshGrid()
+        End If
     End Sub
 
     Private Sub chkSelectCompliant_CheckedChanged(sender As Object, e As EventArgs) Handles chkSelectCompliant.CheckedChanged
@@ -197,7 +310,7 @@ Friend Class GridListItem
     Property File As String
     Property FullPath As String
     Property SigPages As List(Of Integer) = New List(Of Integer)
-    Property Selected As Boolean
+    Property Selected As Boolean = False
     ReadOnly Property SigPageCount As Integer
         Get
             Return SigPages.Count

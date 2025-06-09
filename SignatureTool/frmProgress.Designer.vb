@@ -19,20 +19,20 @@ Partial Class frmProgress
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
+        Me.lblDescription = New DevExpress.XtraEditors.LabelControl()
         Me.ProgressBarControl1 = New DevExpress.XtraEditors.ProgressBarControl()
         CType(Me.ProgressBarControl1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'LabelControl1
+        'lblDescription
         '
-        Me.LabelControl1.Appearance.Font = New System.Drawing.Font("Tahoma", 11.25!, System.Drawing.FontStyle.Bold)
-        Me.LabelControl1.Appearance.Options.UseFont = True
-        Me.LabelControl1.Location = New System.Drawing.Point(13, 13)
-        Me.LabelControl1.Name = "LabelControl1"
-        Me.LabelControl1.Size = New System.Drawing.Size(145, 18)
-        Me.LabelControl1.TabIndex = 0
-        Me.LabelControl1.Text = "Loading File Data..."
+        Me.lblDescription.Appearance.Font = New System.Drawing.Font("Tahoma", 11.25!, System.Drawing.FontStyle.Bold)
+        Me.lblDescription.Appearance.Options.UseFont = True
+        Me.lblDescription.Location = New System.Drawing.Point(13, 13)
+        Me.lblDescription.Name = "lblDescription"
+        Me.lblDescription.Size = New System.Drawing.Size(145, 18)
+        Me.lblDescription.TabIndex = 0
+        Me.lblDescription.Text = "Loading File Data..."
         '
         'ProgressBarControl1
         '
@@ -50,7 +50,7 @@ Partial Class frmProgress
         Me.ClientSize = New System.Drawing.Size(244, 83)
         Me.ControlBox = False
         Me.Controls.Add(Me.ProgressBarControl1)
-        Me.Controls.Add(Me.LabelControl1)
+        Me.Controls.Add(Me.lblDescription)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -64,6 +64,6 @@ Partial Class frmProgress
 
     End Sub
 
-    Friend WithEvents LabelControl1 As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents lblDescription As DevExpress.XtraEditors.LabelControl
     Friend WithEvents ProgressBarControl1 As DevExpress.XtraEditors.ProgressBarControl
 End Class

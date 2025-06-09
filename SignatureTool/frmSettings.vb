@@ -137,7 +137,7 @@ Public Class Settings
 
     Public Sub New()
         SearchFolder = ""
-        SearchPattern = "*.*"
+        SearchPattern = "*.PDF"
         SearchSubfolders = False
         MoveSignedTo = ""
         Signature = New Byte() {}
